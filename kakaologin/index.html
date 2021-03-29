@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kakao Login</title>
+</head>
+<body>
+    <a href="javascript:kakaoLogin()">login</a>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+        // 4be2468c085a575e7399caa684748d03
+        // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('4be2468c085a575e7399caa684748d03');
+        Kakao.isInitialized();
+        console.log(Kakao.isInitialized());
+        
+        function kakaoLogin() {
+            // 대소문자 중요
+            window.Kakao.Auth.login({
+                scope:'profile, account_email, gender',
+                success: function(authObj) {
+                    console.log(authObj);
+                    window.Kakao.API.request({
+                        url: '/v2/user/me',
+                        success: res => {
+                            const kakao_account = res.kakao_account;
+                            console.log(kakao_account);
+                        }
+                    });
+                }
+            })
+        }
+
+    </script>
+</body>
+</html>
